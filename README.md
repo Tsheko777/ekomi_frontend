@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+React Frontend Setup
+Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React app serves as the frontend for interacting with the Laravel backend. The application allows users to log in using their credentials, stores the authentication token, and interacts with the backend to retrieve sender data from the /api/contact/email API endpoint.
+Technology Stack
 
-## Available Scripts
+    Frontend: React (JavaScript library)
 
-In the project directory, you can run:
+    Backend: Laravel (with Sanctum for authentication)
 
-### `npm start`
+    State Management: Built-in React hooks (e.g., useState, useEffect)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Setup Instructions
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Install Dependencies
 
-### `npm test`
+Ensure all necessary dependencies are installed before starting the React application:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    Navigate to the ekomi_frontend directory:
 
-### `npm run build`
+cd ekomi_frontend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Install the dependencies:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Run the Development Server
 
-### `npm run eject`
+To run the React development server locally, use the following command:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+npm start
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Once the server is running, open your browser and go to http://localhost:3000 to view the React app. 3. Configure the API URL
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Ensure the React app is correctly configured to communicate with the backend API. The API URL can be set in an environment variable to point to the Laravel server.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    Create a .env file in the ekomi_frontend directory if it doesn’t exist.
 
-## Learn More
+    Add the following configuration (adjust the API URL as needed):
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    REACT_APP_API_URL=http://localhost:8000/api
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This will configure the React app to communicate with the backend API at http://localhost:8000. 4. Authentication Flow
 
-### Code Splitting
+The React app integrates with the Laravel backend using Sanctum for authentication. Here’s the general flow:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    Login: Users log in with their email (andre@gmail.com) and password (andre#777@).
 
-### Analyzing the Bundle Size
+    Token Storage: Upon successful login, the backend returns a Sanctum token, which is then stored in the browser (typically in localStorage or cookies).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    Authenticated Requests: The token is included in the Authorization header for subsequent requests to authenticated routes like /api/contact/email.
 
-### Making a Progressive Web App
+5.  Testing the Login and API Calls
+    Testing Login
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+        Open the React app in your browser at http://localhost:3000.
 
-### Advanced Configuration
+        Enter the following credentials to log in:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+            Email: andre@gmail.com
 
-### Deployment
+            Password: andre#777@
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+        Upon successful login, the backend will return an authentication token, which will be used for future requests.
 
-### `npm run build` fails to minify
+Testing the /api/contact/email Endpoint
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+After logging in, you can test the /api/contact/email API endpoint to retrieve sender data:
+
+    Open the React app and ensure that the frontend is correctly fetching the sender data using the email stehr.petra@bauch.com.
+
+    The token, stored after login, is automatically included in API requests as a Bearer token in the request headers.
+
+6. Handling Logout
+
+When the user logs out, clear the authentication token from localStorage or cookies and redirect the user to the login page.
+
+Example of the logout flow:
+
+    Remove the token stored in localStorage:
+
+localStorage.removeItem('token');
+
+Redirect to the login page or reset the UI to indicate that the user is logged out.
+# ekomi_frontend
