@@ -35,7 +35,7 @@ const Dashboard = () => {
 
   return (
     <div className="container">
-      {contact && (
+      {contact && contact.length != 0 && (
         <div className="card shadow-sm mt-4">
           <div className="card-body">
             <h5 className="card-title">Contact Details for {email}</h5>
