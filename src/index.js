@@ -4,7 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import axios from "axios";
+
+const backend = process.env.REACT_APP_BACKEND;
+await axios.get(backend + "/sanctum/csrf-cookie", {
+  withCredentials: true,
+  withXSRFToken: true,
+});
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <BrowserRouter>
     <App />

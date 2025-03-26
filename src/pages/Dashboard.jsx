@@ -18,10 +18,11 @@ const Dashboard = () => {
         setLoading(true);
         const response = await axios.get(backend + "/api/contact/" + email, {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+          withXSRFToken: true, // Add this
         });
         setContact(response.data);
       } catch (error) {
-        console.error("Error fetching contact:", error);
         if (error.response)
           if (error.response.status == 401) {
             navigate("/");

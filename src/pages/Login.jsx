@@ -18,15 +18,24 @@ export const Login = () => {
     const backend = process.env.REACT_APP_BACKEND;
     try {
       setLoading(true);
-      const response = await axios.post(backend + "/api/login", { email: email, password: password });
+      await axios.get(backend + "/sanctum/csrf-cookie", {
+        withCredentials: true,
+      });
+      const response = await axios.post(backend + "/api/login", { email: email, password: password }, { withCredentials: true, withXSRFToken: true });
+      /*  const response = await axios.post(backend + "/api/login", { email: email, password: password }); */
 
       if (response && response.data.token) {
         localStorage.setItem("token", response.data.token);
-        navigate("/dashboard");
+        window.location.href = "/dashboard";
+        //navigate("/dashboard");
       }
       setError((prev) => response.message);
     } catch (error) {
-      setError((prev) => error.response.data.message);
+      if (error && error.response) {
+        setError((prev) => error.response.data.message);
+        return;
+      }
+      setError((prev) => "Error login: Please contact webmaster");
     } finally {
       setLoading(false);
     }

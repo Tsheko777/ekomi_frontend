@@ -82,4 +82,11 @@ Example of the logout flow:
 localStorage.removeItem('token');
 
 Redirect to the login page or reset the UI to indicate that the user is logged out.
+
 # ekomi_frontend
+
+to run the front end
+
+1. Remane .env_front to .env and place inside root folder of ekomi_front
+2. Run sudo docker run -d -p 3000:3000 --name my-react
+3. sudo docker run -d -p 3000:3000 --name react_app my-react
